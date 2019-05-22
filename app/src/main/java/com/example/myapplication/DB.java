@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DB {
 
     public static void main(String[] args) {
 
+        //getData();
         try
         {
             DB db = new DB();
@@ -43,27 +45,8 @@ public class DB {
 
 
 
-            // CREATE TABLE!!!!!!!!!!!!!
 
-            System.out.println("Creating table in given database...");
-
-            Statement stmt = ret.createStatement();
-
-            String sql = "CREATE TABLE TEST " +
-                    "(id INTEGER not NULL, " +
-                    " first VARCHAR(255), " +
-                    " last VARCHAR(255), " +
-                    " age INTEGER, " +
-                    " PRIMARY KEY ( id ))";
-
-            stmt.executeUpdate(sql);
-            System.out.println("Created table in given database...");
-
-            // CREATE TABLE ENDE!!!!!!
-
-
-
-            /* Get related meta data for this mysql server to verify db connect successfully.. */
+            /* Get related meta data for this mysql server to verify db connect successfully..
             DatabaseMetaData dbmd = ret.getMetaData();
 
             String dbName = dbmd.getDatabaseProductName();
@@ -84,7 +67,7 @@ public class DB {
 
             System.out.println("Database User Name is " + userName);
 
-            System.out.println("Database Driver Name is " + driverName);
+            System.out.println("Database Driver Name is " + driverName); */
 
         }catch(Exception ex)
         {
@@ -94,4 +77,33 @@ public class DB {
             return ret;
         }
     }
+
+    public static ArrayList<String> getData() {
+        ArrayList<String> data = new ArrayList<String>();
+
+        try {
+            DB db = new DB();
+            Connection conn = db.getPostgreSQLConnection();
+            Statement statement = conn.createStatement();
+            String sql = "SELECT * FROM test.table1";
+            ResultSet results = statement.executeQuery(sql);
+
+            while (results.next()) {
+                data.add(results.getString("name"));
+            }
+
+            for (int i =0; i<data.size(); i++){
+                System.out.println(data.get(i));
+            }
+
+
+            statement.close();
+            results.close();
+            conn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return data;
+    }
+
 }
