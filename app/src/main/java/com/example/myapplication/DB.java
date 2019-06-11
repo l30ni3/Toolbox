@@ -2,17 +2,42 @@ package com.example.myapplication;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class DB {
+public class DB extends Thread {
+
+    private List<String> data;
+    private boolean done = false;
+
+    public boolean done() {
+        return this.done;
+    }
+
+    public List<String> getData() {
+        return this.data;
+    }
 
     public static void main(String[] args) {
-
-        //getData();
+        List<String> data = new ArrayList<String>();
         try
         {
             DB db = new DB();
-
             Connection conn = db.getPostgreSQLConnection();
+            Statement statement = conn.createStatement();
+            String sql = "SELECT * FROM test.table1";
+            ResultSet results = statement.executeQuery(sql);
+
+            while (results.next()) {
+                data.add(results.getString("name"));
+            }
+
+            for (int i =0; i<data.size(); i++){
+                System.out.println(data.get(i));
+            }
+
+
+            statement.close();
+            results.close();
             conn.close();
         }catch(Exception ex)
         {
@@ -43,32 +68,6 @@ public class DB {
             /* Get the Connection object. */
             ret = DriverManager.getConnection(mysqlConnUrl, mysqlUserName , mysqlPassword);
 
-
-
-
-            /* Get related meta data for this mysql server to verify db connect successfully..
-            DatabaseMetaData dbmd = ret.getMetaData();
-
-            String dbName = dbmd.getDatabaseProductName();
-
-            String dbVersion = dbmd.getDatabaseProductVersion();
-
-            String dbUrl = dbmd.getURL();
-
-            String userName = dbmd.getUserName();
-
-            String driverName = dbmd.getDriverName();
-
-            System.out.println("Database Name is " + dbName);
-
-            System.out.println("Database Version is " + dbVersion);
-
-            System.out.println("Database Connection Url is " + dbUrl);
-
-            System.out.println("Database User Name is " + userName);
-
-            System.out.println("Database Driver Name is " + driverName); */
-
         }catch(Exception ex)
         {
             ex.printStackTrace();
@@ -78,8 +77,8 @@ public class DB {
         }
     }
 
-    public static ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<String>();
+    public void run() {
+        this.data = new ArrayList<String>();
 
         try {
             DB db = new DB();
@@ -103,7 +102,11 @@ public class DB {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return data;
+
+        this.done = true;
+
     }
+
+
 
 }

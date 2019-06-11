@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import java.util.Arrays;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShowAllTools extends AppCompatActivity {
 
@@ -15,26 +17,34 @@ public class ShowAllTools extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_tools);
 
-        ArrayList<String> list = new ArrayList<String>();
-        //list.addAll(DB.getData());
-        for (int i = 0; i < DB.getData().size(); i++) {
-            list.add(i, DB.getData().get(i));
-        }
 
-
+        // declaration and initialize String Array  
         String listString = "";
 
-        for (String s : list)
-        {
-            listString += s + "\t";
+        // Start database connection in new thread
+        DB d = new DB();
+        d.start();
+
+        // Polling - to do: Future!
+        while(!d.done()) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        System.out.println(listString);
+        List<String> data = d.getData();
+        String str[] = new String[data.size()];
+        for (int j = 0; j < data.size(); j++) {
 
+            // Assign each value to String array
+            str[j] = data.get(j);
+        }
 
-        //ArrayList<String> dataString = DB.getData();
-        TextView data = findViewById(R.id.data);
+        listString = Arrays.toString(str);
 
-        data.setText(listString);
+        TextView dataView = findViewById(R.id.data);
+        dataView.setText(listString);
     }
 }
