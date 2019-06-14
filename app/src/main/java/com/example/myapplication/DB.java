@@ -57,7 +57,7 @@ public class DB extends Thread {
             Class.forName("org.postgresql.Driver");
 
             /* Create connection url. */
-            String mysqlConnUrl = "jdbc:postgresql://localhost:5432/Werkzeugausleihe";
+            String mysqlConnUrl = "jdbc:postgresql://10.0.2.2:5432/Werkzeugausleihe";
 
             /* user name. */
             String mysqlUserName = "postgres";
