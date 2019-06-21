@@ -26,9 +26,21 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /** Called when the user taps the Send button */
+    /** Called when the user taps the 'Werkzeuge' button */
     public void showAll(View view) {
         Intent intent = new Intent(this, ShowAllTools.class);
+        startActivity(intent);
+    }
+
+    /** Called when the user taps the 'Maschinen' button */
+    public void showAllMachines(View view) {
+        Intent intent = new Intent(this, ShowAllMachines.class);
+        startActivity(intent);
+    }
+
+    /** Called when the user taps the 'Maschinen' button */
+    public void showAllMaterial(View view) {
+        Intent intent = new Intent(this, ShowAllMaterial.class);
         startActivity(intent);
     }
 

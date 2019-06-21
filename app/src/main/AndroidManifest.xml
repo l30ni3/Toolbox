@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowAllTools"></activity>
+        <activity
+            android:name=".ShowAllMaterial"
+            android:label="@string/title_activity_show_all_material"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ShowAllMachines"
+            android:label="@string/title_activity_show_all_machines"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ShowAllTools" />
         <activity
             android:name=".DisplayMessageActivity"
             android:parentActivityName=".MainActivity">

@@ -4,15 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -21,13 +25,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowAllTools extends AppCompatActivity {
+public class ShowAllMachines extends AppCompatActivity {
 
-    private ArrayList<ClassListTools> itemArrayList;  //List items Array
+    private ArrayList<ClassListMachines> itemArrayList;  //List items Array
     private MyAppAdapter myAppAdapter; //Array Adapter
     private ListView listView; // ListView
     private boolean success = false; // boolean
@@ -41,10 +46,10 @@ public class ShowAllTools extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_all_tools);
+        setContentView(R.layout.activity_show_all_machines);
 
-        listView = (ListView) findViewById(R.id.listAllTools); //ListView Declaration
-        itemArrayList = new ArrayList<ClassListTools>(); // Arraylist Initialization
+        listView = (ListView) findViewById(R.id.listAllMachines); //ListView Declaration
+        itemArrayList = new ArrayList<ClassListMachines>(); // Arraylist Initialization
 
         // Calling Async Task
         SyncData orderData = new SyncData();
@@ -59,7 +64,7 @@ public class ShowAllTools extends AppCompatActivity {
         @Override
         protected void onPreExecute() //Starts the progress dailog
         {
-            progress = ProgressDialog.show(ShowAllTools.this, "Synchronising",
+            progress = ProgressDialog.show(ShowAllMachines.this, "Synchronising",
                     "List Loading! Please Wait...", true);
         }
 
@@ -78,18 +83,18 @@ public class ShowAllTools extends AppCompatActivity {
                     success = false;
                 } else {
                     // Change below query according to your own database.
-                    String query = "SELECT * FROM \"Inventar\".\"Werkzeug\";";
+                    String query = "SELECT * FROM \"Inventar\".\"Maschinen\";";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null) // if resultset not null, I add items to itemArraylist using class created
                     {
                         while (rs.next()) {
                             try {
-                                itemArrayList.add(new ClassListTools(
+                                itemArrayList.add(new ClassListMachines(
+                                        rs.getString("Maschinen_ID"),
                                         rs.getString("Name"),
-                                        rs.getString("Werkzeug_ID"),
-                                        rs.getString("Lagerort"),
-                                        rs.getBoolean("Ausgeliehen")));
+                                        rs.getString("Seriennummer"),
+                                        rs.getBoolean("Besetzt")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -115,11 +120,11 @@ public class ShowAllTools extends AppCompatActivity {
         protected void onPostExecute(String msg) // disimissing progress dialoge, showing error and setting up my ListView
         {
             progress.dismiss();
-            Toast.makeText(ShowAllTools.this, msg + "", Toast.LENGTH_LONG).show();
+            Toast.makeText(ShowAllMachines.this, msg + "", Toast.LENGTH_LONG).show();
             if (success == false) {
             } else {
                 try {
-                    myAppAdapter = new MyAppAdapter(itemArrayList, ShowAllTools.this);
+                    myAppAdapter = new MyAppAdapter(itemArrayList, ShowAllMachines.this);
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                     listView.setAdapter(myAppAdapter);
                 } catch (Exception ex) {
@@ -137,19 +142,19 @@ public class ShowAllTools extends AppCompatActivity {
         public class ViewHolder {
             TextView textName;
             TextView textID;
-            TextView textLocation;
+            TextView textSerial;
             TextView textAvailability;
         }
 
-        public List<ClassListTools> parkingList;
+        public List<ClassListMachines> parkingList;
 
         public Context context;
-        ArrayList<ClassListTools> arraylist;
+        ArrayList<ClassListMachines> arraylist;
 
-        private MyAppAdapter(List<ClassListTools> apps, Context context) {
+        private MyAppAdapter(List<ClassListMachines> apps, Context context) {
             this.parkingList = apps;
             this.context = context;
-            arraylist = new ArrayList<ClassListTools>();
+            arraylist = new ArrayList<ClassListMachines>();
             arraylist.addAll(parkingList);
         }
 
@@ -176,20 +181,21 @@ public class ShowAllTools extends AppCompatActivity {
             ViewHolder viewHolder = null;
             if (rowView == null) {
                 LayoutInflater inflater = getLayoutInflater();
-                rowView = inflater.inflate(R.layout.list_tools, parent, false);
+                rowView = inflater.inflate(R.layout.list_machines, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.textID = (TextView) rowView.findViewById(R.id.werkzeugID);
-                viewHolder.textName = (TextView) rowView.findViewById(R.id.werkzeugName);
-                viewHolder.textLocation = (TextView) rowView.findViewById(R.id.lagerort);
+                viewHolder.textID = (TextView) rowView.findViewById(R.id.machineID);
+                viewHolder.textName = (TextView) rowView.findViewById(R.id.machineName);
+                viewHolder.textSerial = (TextView) rowView.findViewById(R.id.machineSerial);
                 viewHolder.textAvailability = (TextView) rowView.findViewById(R.id.available);
                 rowView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            // get the names from ClassListTools and set Text to ViewHolder
+            // get the names from ClassListMachines and set Text to ViewHolder
             viewHolder.textName.setText(parkingList.get(position).getName() + "");
             viewHolder.textID.setText(parkingList.get(position).getId() + "");
-            viewHolder.textLocation.setText(parkingList.get(position).getLoc() + "");
+            viewHolder.textSerial.setText(parkingList.get(position).getSerial() + "");
+            viewHolder.textAvailability.setText(parkingList.get(position).getAvailability() + "");
 
             return rowView;
         }

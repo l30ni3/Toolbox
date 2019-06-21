@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="edit_message">Enter search term</string>
-    <string name="button_send">Send</string>
-    <string name="show_All">Show All</string>
+    <string name="app_name">Toolbox</string>
+    <string name="edit_message">ID/ Name</string>
+    <string name="button_send">Suchen</string>
+    <string name="show_All">Werkzeuge</string>
+    <string name="machines">Maschinen</string>
+    <string name="material">Materialien</string>
+    <string name="title_activity_show_all_machines">ShowAllMachines</string>
+    <string name="title_activity_show_all_material">ShowAllMaterial</string>
 </resources>
