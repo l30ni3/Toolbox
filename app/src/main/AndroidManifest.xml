@@ -21,7 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ShowAllTools" />
         <activity
-            android:name=".DisplayMessageActivity"
+            android:name=".SearchById"
             android:parentActivityName=".MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->

@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Called when the user taps the Send button */
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+    public void searchById(View view) {
+        Intent intent = new Intent(this, SearchById.class);
         EditText editText = (EditText) findViewById(R.id.editText);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Called when the user taps the 'Werkzeuge' button */
-    public void showAll(View view) {
+    public void showAllTools(View view) {
         Intent intent = new Intent(this, ShowAllTools.class);
         startActivity(intent);
     }
