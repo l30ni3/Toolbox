@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/machineID"
-        android:layout_width="0dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -27,25 +27,34 @@
 
 
     <TextView
-        android:id="@+id/machineSerial"
-        android:layout_width="100dp"
+        android:id="@+id/machineLoc"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:text="Seriennummer"
+        android:text="Lagerort"
         app:layout_constraintStart_toEndOf="@+id/machineName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/available"
-        android:layout_width="0dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="Verfügbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/machineSerial"
+        app:layout_constraintStart_toEndOf="@+id/machineLoc"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bookMachine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Ausleihen"
+        app:layout_constraintBaseline_toBaselineOf="@+id/available"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/available" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

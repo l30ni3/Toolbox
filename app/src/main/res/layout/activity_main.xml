@@ -12,15 +12,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
         android:hint="@string/edit_message"
         android:inputType="textPersonName"
         android:text="@string/edit_message"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTools"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/edit_message" />
 
     <Button
@@ -44,15 +44,15 @@
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
         android:onClick="showAllTools"
         android:text="@string/show_All"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMachines"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
@@ -61,14 +61,14 @@
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
         android:onClick="showAllMachines"
         android:text="@string/machines"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMaterial"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTools" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonMaterial"
@@ -76,13 +76,13 @@
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="150dp"
         android:onClick="showAllMaterial"
         android:text="@string/material"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMachines" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

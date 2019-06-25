@@ -2,14 +2,18 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ import java.util.List;
 
 public class ShowAllTools extends AppCompatActivity {
 
+
     private ArrayList<ClassListTools> itemArrayList;  //List items Array
     private MyAppAdapter myAppAdapter; //Array Adapter
     private ListView listView; // ListView
@@ -38,7 +43,7 @@ public class ShowAllTools extends AppCompatActivity {
     private static final String PASS = "postgresql";
 
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_tools);
@@ -49,7 +54,18 @@ public class ShowAllTools extends AppCompatActivity {
         // Calling Async Task
         SyncData orderData = new SyncData();
         orderData.execute("");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+    }
+
 
     // Async Task has three overrided methods,
     private class SyncData extends AsyncTask<String, String, String> {
@@ -86,10 +102,10 @@ public class ShowAllTools extends AppCompatActivity {
                         while (rs.next()) {
                             try {
                                 itemArrayList.add(new ClassListTools(
-                                        rs.getString("Name"),
                                         rs.getString("Werkzeug_ID"),
+                                        rs.getString("Name"),
                                         rs.getString("Lagerort"),
-                                        rs.getBoolean("Ausgeliehen")));
+                                        rs.getBoolean("Nutzung")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -135,8 +151,8 @@ public class ShowAllTools extends AppCompatActivity {
     {
         //class ViewHolder, which holds the textViews
         public class ViewHolder {
-            TextView textName;
             TextView textID;
+            TextView textName;
             TextView textLocation;
             TextView textAvailability;
         }
@@ -187,9 +203,13 @@ public class ShowAllTools extends AppCompatActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             // get the names from ClassListTools and set Text to ViewHolder
-            viewHolder.textName.setText(parkingList.get(position).getName() + "");
             viewHolder.textID.setText(parkingList.get(position).getId() + "");
+            viewHolder.textName.setText(parkingList.get(position).getName() + "");
             viewHolder.textLocation.setText(parkingList.get(position).getLoc() + "");
+            if (parkingList.get(position).getAvailability() == true)
+                viewHolder.textAvailability.setText("ja");
+            else
+                viewHolder.textAvailability.setText("nein");
 
             return rowView;
         }

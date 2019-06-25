@@ -3,12 +3,12 @@ package com.example.myapplication;
 public class ClassListTools
 {
 
-    public String name; //Name
     public String id; //ID
+    public String name; //Name
     public String loc; //Lagerort
     public boolean available; //Verfügbarkeit
 
-    public ClassListTools(String name, String id, String loc, boolean available)
+    public ClassListTools(String id, String name, String loc, boolean available)
     {
         this.name = name;
         this.id = id;

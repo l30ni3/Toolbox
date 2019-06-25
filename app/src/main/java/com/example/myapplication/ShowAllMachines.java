@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -43,7 +44,7 @@ public class ShowAllMachines extends AppCompatActivity {
     private static final String PASS = "postgresql";
 
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_machines);
@@ -54,7 +55,11 @@ public class ShowAllMachines extends AppCompatActivity {
         // Calling Async Task
         SyncData orderData = new SyncData();
         orderData.execute("");
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
     }
+
 
     // Async Task has three overrided methods,
     private class SyncData extends AsyncTask<String, String, String> {
@@ -93,8 +98,8 @@ public class ShowAllMachines extends AppCompatActivity {
                                 itemArrayList.add(new ClassListMachines(
                                         rs.getString("Maschinen_ID"),
                                         rs.getString("Name"),
-                                        rs.getString("Seriennummer"),
-                                        rs.getBoolean("Besetzt")));
+                                        rs.getString("Lagerort"),
+                                        rs.getBoolean("Nutzung")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -140,9 +145,9 @@ public class ShowAllMachines extends AppCompatActivity {
     {
         //class ViewHolder, which holds the textViews
         public class ViewHolder {
-            TextView textName;
             TextView textID;
-            TextView textSerial;
+            TextView textName;
+            TextView textLoc;
             TextView textAvailability;
         }
 
@@ -185,17 +190,20 @@ public class ShowAllMachines extends AppCompatActivity {
                 viewHolder = new ViewHolder();
                 viewHolder.textID = (TextView) rowView.findViewById(R.id.machineID);
                 viewHolder.textName = (TextView) rowView.findViewById(R.id.machineName);
-                viewHolder.textSerial = (TextView) rowView.findViewById(R.id.machineSerial);
+                viewHolder.textLoc = (TextView) rowView.findViewById(R.id.machineLoc);
                 viewHolder.textAvailability = (TextView) rowView.findViewById(R.id.available);
                 rowView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             // get the names from ClassListMachines and set Text to ViewHolder
-            viewHolder.textName.setText(parkingList.get(position).getName() + "");
             viewHolder.textID.setText(parkingList.get(position).getId() + "");
-            viewHolder.textSerial.setText(parkingList.get(position).getSerial() + "");
-            viewHolder.textAvailability.setText(parkingList.get(position).getAvailability() + "");
+            viewHolder.textName.setText(parkingList.get(position).getName() + "");
+            viewHolder.textLoc.setText(parkingList.get(position).getLoc() + "");
+            if (parkingList.get(position).getAvailability() == true)
+                viewHolder.textAvailability.setText("ja");
+            else
+                viewHolder.textAvailability.setText("nein");
 
             return rowView;
         }

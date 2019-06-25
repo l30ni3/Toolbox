@@ -91,7 +91,7 @@ public class SearchById extends AppCompatActivity {
                     String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
                     // Change below query according to your own database.
-                    String query = "SELECT \"Name\", \"Lagerort\", \"Ausgeliehen\" \n" +
+                    String query = "SELECT \"Name\", \"Lagerort\", \"Nutzung\" \n" +
                             "FROM \"Inventar\".\"Werkzeug\"\n" +
                             "WHERE \"Werkzeug\".\"Werkzeug_ID\" = '"  + message + "' OR \"Werkzeug\".\"Name\" = '" + message + "';";
                     Statement stmt = conn.createStatement();
@@ -103,7 +103,7 @@ public class SearchById extends AppCompatActivity {
                                 itemArrayList.add(new ClassListResults(
                                         rs.getString("Name"),
                                         rs.getString("Lagerort"),
-                                        rs.getBoolean("Ausgeliehen")));
+                                        rs.getBoolean("Nutzung")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -202,9 +202,9 @@ public class SearchById extends AppCompatActivity {
             viewHolder.textName.setText(parkingList.get(position).getName() + "");
             viewHolder.textLoc.setText(parkingList.get(position).getLoc() + "");
             if (parkingList.get(position).getAvailability() == true)
-                viewHolder.textAvailability.setText("Verfügbar");
+                viewHolder.textAvailability.setText("ja");
             else
-                viewHolder.textAvailability.setText("Ausgeliehen");
+                viewHolder.textAvailability.setText("nein");
 
 
             return rowView;

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -43,7 +44,7 @@ public class ShowAllMaterial extends AppCompatActivity {
     private static final String PASS = "postgresql";
 
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_material);
@@ -54,7 +55,12 @@ public class ShowAllMaterial extends AppCompatActivity {
         // Calling Async Task
         SyncData orderData = new SyncData();
         orderData.execute("");
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
     }
+
+
 
     // Async Task has three overrided methods,
     private class SyncData extends AsyncTask<String, String, String> {
