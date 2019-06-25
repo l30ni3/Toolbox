@@ -12,14 +12,14 @@
         android:layout_height="65dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:text="Suche ergab folgende Treffer:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SerachStringLabel" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listAllResults"
@@ -40,26 +40,24 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewSearchTitel" />
 
     <TextView
-        android:id="@+id/searchString"
+        android:id="@+id/searchStringOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="24dp"
         android:text="Search String"
-        app:layout_constraintStart_toEndOf="@+id/SerachStringLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/SearchStringLabel"
+        app:layout_constraintTop_toTopOf="@id/textViewSearchTitel" />
 
     <TextView
-        android:id="@+id/SerachStringLabel"
+        android:id="@+id/SearchStringLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
         android:layout_marginTop="24dp"
         android:text="Suchbegriff:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/textViewSearchTitel"
+        app:layout_constraintTop_toTopOf="@id/textViewSearchTitel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

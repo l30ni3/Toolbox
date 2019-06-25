@@ -1,3 +1,5 @@
+package com.example.myapplication;
+
 import android.content.Context;
 import android.content.Intent;
 
@@ -18,11 +20,11 @@ import java.sql.Statement;
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.*;
 
-public class LocalUnitTest {
+public class LocalDataConnectivityTest {
 
     @Test
     public void connectToDatabase() {
-        final String DB_URL = "jdbc:postgresql://10.0.2.2:5432/Toolbox";
+        final String DB_URL = "jdbc:postgresql://localhost:5432/Toolbox";
         final String USER = "postgres";
         final String PASS = "postgresql";
 
@@ -36,13 +38,11 @@ public class LocalUnitTest {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             Statement s = conn.createStatement();
-            ResultSet rs = s.executeQuery("SELECT 1");
-            assertTrue(rs.next());
-            assertEquals(1, rs.getInt(1));
-            assertFalse(rs.next());
+            ResultSet rs = s.executeQuery("SELECT * FROM \"Inventar\".\"Werkzeug\"\n" +
+                    "WHERE \"Werkzeug\".\"Werkzeug_ID\" = '0006';");
+            assertEquals("Alexa", rs.getString("Maschinen_ID"));
         } catch (Exception e) {
             System.out.print(e);
-            fail();
         }
 
     }

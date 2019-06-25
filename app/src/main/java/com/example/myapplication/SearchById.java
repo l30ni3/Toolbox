@@ -51,7 +51,7 @@ public class SearchById extends AppCompatActivity {
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.searchString);
+        TextView textView = findViewById(R.id.searchStringOutput);
         textView.setText(message);
 
         // Calling Async Task
@@ -198,10 +198,14 @@ public class SearchById extends AppCompatActivity {
             } else {
                 viewHolder = (SearchById.MyAppAdapter.ViewHolder) convertView.getTag();
             }
-            // get the names from ClassListMachines and set Text to ViewHolder
+            // get the names from ClassListResults and set Text to ViewHolder
             viewHolder.textName.setText(parkingList.get(position).getName() + "");
             viewHolder.textLoc.setText(parkingList.get(position).getLoc() + "");
-            viewHolder.textAvailability.setText(parkingList.get(position).getAvailability() + "");
+            if (parkingList.get(position).getAvailability() == true)
+                viewHolder.textAvailability.setText("Verfügbar");
+            else
+                viewHolder.textAvailability.setText("Ausgeliehen");
+
 
             return rowView;
         }
